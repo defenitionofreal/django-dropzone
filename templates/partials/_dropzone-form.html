@@ -1,0 +1,16 @@
+<form action="upload/"
+      class="dropzone needsclick"
+      id="my-dropzone"
+      method="post">
+    {% csrf_token %}
+    <div class="dz-message needsclick">
+         <span class="text">
+         <img src="https://image.ibb.co/cw1TNS/icons8_upload_to_ftp_100.png" alt="Camera" />
+         Drop files here or click to upload.
+         </span>
+         <span class="plus">+</span>
+      </div>
+    <div class="fallback">
+      <input name="file" type="file" multiple />
+    </div>
+</form>
