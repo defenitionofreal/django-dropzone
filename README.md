@@ -1,26 +1,47 @@
-Django starter template
+Django and dropzone.js
 =====================
+***
+**Описание ТЗ**
+ТЗ: создать простой сервис загрузки картинки на сервер.
 
-My Django starter template. Going to change a little from time to time. But even now it saves a lot of time!
+1я часть (frontend):
+-пустая страница, никакой верстки, добавить dropbox зону (можно использовать dropzonejs.com или любой другой плагин, любые библиотеки js).
 
-**Install**
+2я часть:
+-сервис на django + drf принимает и загружает файл, файл должен быть обработан (уменьшить размер, повернуть, поменять формат, хоть все сразу, хоть что-то одно);
+-нужно обязательно использовать django + drf;
+-можно использовать любые другие библиотеки, пакеты для python, django.
+
+3я часть:
+-сервис должен работать :) ;
+-нужно запустить проект на любом бесплатном хостинге (например https://www.pythonanywhere.com/);
+-код должен лежать на github.com.
+
+***
+**Решение**
+Деплой через докер и гит на vscale.io
+Вот сам сервис для пользователя - http://80.249.151.42:8000/
+Перетаскивайте картинки и пополняйте галерею снизу.
+![dropzone](https://testingsite.tmweb.ru/pics/dropzone.png)
+В задании было сказано никакой верстки, но я подумал что так как-то скучно и решил сделать небольшую верстку прочто чтобы глаз порадовать. 
+
+Сервис принимает файлы только формата jpg и png. Картинки обрабатываются при помощи пакета django-imagekit.
+Формат jpg переформатируется в png, так же все картинки меняют свой размер на 300x300.
+
+**Api endpoints**
 ```
-mkdir new_project
-cd new_project
-python3 -m venv venv
-source venv/bin/activate
-mkdir src
-cd src
-git clone https://github.com/defenitionofreal/django-starter-template.git
-pip install -r requirements.txt
-```
+# JWT endpoints
+http://80.249.151.42:8000/api/v1/token/
+http://80.249.151.42:8000/api/v1/token/refresh/
 
-Generate random secret key - https://djecrety.ir/
-
-Or do something like this:
+http://80.249.151.42:8000/user/
+http://80.249.151.42:8000/image/
 ```
-from django.core.management.utils import get_random_secret_key  
-get_random_secret_key()
-```
+Я сделал авторизацию через JWT так как это считается лучшей практикой. 
+Так же исходя из этих размышлений я создал кастомную модель пользователя 'CustomUser'.
+Api эндпоинты протестированны в Postman!
 
-**In .gitingore dont forget to uncomment .env, local.py and media !!!**
+В самом репозитории я изменил эндпоинты на api/v1/user и api/v1/image, но на сервере они без имзенений. 
+Я заметил этот нюнсик после того как уже развернул проект, думаю это не страшно и не стал пересобирать.
+
+В файле requirements.txt есть не используемые пакеты такие как requests или psycopg2-binary. Я по дефолту ставлю эти вещи так как они нужны почти что постоянно, только вот тестовом задании не применяются. Предпологаю что это не страшно, но лучше объясню на всякий случай.
