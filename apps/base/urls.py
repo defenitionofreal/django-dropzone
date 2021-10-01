@@ -10,8 +10,8 @@ app_name = 'base'
 
 router = routers.DefaultRouter()
 
-router.register(r'user', user_view.UserViewSet, basename='user')
-router.register(r'image', image_view.ImageViewSet, basename='image')
+router.register(r'api/v1/user', user_view.UserViewSet, basename='user')
+router.register(r'api/v1/image', image_view.ImageViewSet, basename='image')
 
 urlpatterns = [
     path('', views.index, name='index'),
